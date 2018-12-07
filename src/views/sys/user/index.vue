@@ -1,39 +1,73 @@
 <template>
   <div class="app-container">
     <div class="app-fifter">
-      <el-form :inline="true" ref="searchQuery" :model="listQuery"  v-if="isSimpleShow" class="demo-form-inline">
+      <el-form
+        :inline="true"
+        ref="searchQuery"
+        :model="listQuery"
+        v-if="isSimpleShow"
+        class="demo-form-inline"
+      >
         <el-form-item label="用户名">
           <el-input size="small" v-model="listQuery.name" placeholder="请输入用户名"></el-input>
         </el-form-item>
         <el-form-item label="状态">
           <el-select size="small" v-model="listQuery.status" placeholder="请选择状态">
-            <el-option v-for="item in statusOptions" :key="item.key" :label="item.label" :value="item.key"/>
+            <el-option
+              v-for="item in statusOptions"
+              :key="item.key"
+              :label="item.label"
+              :value="item.key"
+            />
           </el-select>
         </el-form-item>
         <el-form-item>
           <el-button type="primary" size="small" @click="onSearch" icon="el-icon-search">查询</el-button>
           <el-button size="small" @click="onReset" icon="el-icon-refresh">重置</el-button>
-          <el-button size="small" type="text" @click="onShow">展开<i class="el-icon-arrow-down"></i></el-button>
+          <el-button size="small" type="text" @click="onShow">
+            展开
+            <i class="el-icon-arrow-down"></i>
+          </el-button>
         </el-form-item>
       </el-form>
-      <el-form :inline="true" ref="searchQuery" :model="listQuery" v-if="isShow" class="demo-form-inline">
-          <el-form-item label="用户名">
+      <el-form
+        :inline="true"
+        ref="searchQuery"
+        :model="listQuery"
+        v-if="isShow"
+        class="demo-form-inline"
+      >
+        <el-form-item label="用户名">
           <el-input size="small" v-model="listQuery.name" placeholder="请输入用户名"></el-input>
         </el-form-item>
         <el-form-item label="状态">
           <el-select size="small" v-model="listQuery.status" placeholder="请选择状态">
-            <el-option number v-for="item in statusOptions" :key="item.key" :label="item.label" :value="item.key"/>
+            <el-option
+              number
+              v-for="item in statusOptions"
+              :key="item.key"
+              :label="item.label"
+              :value="item.key"
+            />
           </el-select>
         </el-form-item>
-          <el-form-item label="角色">
+        <el-form-item label="角色">
           <el-select size="small" v-model="listQuery.role" placeholder="请选择角色">
-            <el-option v-for="item in roleOptions" :key="item.key" :label="item.label" :value="item.key"/>
+            <el-option
+              v-for="item in roleOptions"
+              :key="item.key"
+              :label="item.label"
+              :value="item.key"
+            />
           </el-select>
         </el-form-item>
         <el-form-item>
           <el-button type="primary" size="small" @click="onSearch" icon="el-icon-search">查询</el-button>
           <el-button size="small" @click="onReset" icon="el-icon-refresh">重置</el-button>
-          <el-button size="small" type="text" @click="onSimpleShow">收起<i class="el-icon-arrow-up"></i></el-button>
+          <el-button size="small" type="text" @click="onSimpleShow">
+            收起
+            <i class="el-icon-arrow-up"></i>
+          </el-button>
         </el-form-item>
       </el-form>
       <div>
@@ -47,8 +81,9 @@
         element-loading-spinner="el-icon-loading"
         element-loading-text="加载中"
         fit
-        highlight-current-row>
-          <el-table-column type="expand">
+        highlight-current-row
+      >
+        <el-table-column type="expand">
           <template slot-scope="props">
             <el-form label-position="left" inline class="info-table-expand">
               <el-form-item label="ID">
@@ -61,9 +96,7 @@
           </template>
         </el-table-column>
         <el-table-column align="center" label="序号" width="100">
-          <template slot-scope="scope">
-            {{ scope.row.id }}
-          </template>
+          <template slot-scope="scope">{{ scope.row.id }}</template>
         </el-table-column>
         <el-table-column label="用户名" align="center">
           <template slot-scope="scope">
@@ -72,11 +105,19 @@
         </el-table-column>
         <el-table-column class-name="status-col" label="状态" align="center">
           <template slot-scope="scope">
-            <el-tag size="mini" v-if="scope.row.status == 1" :type="scope.row.status | statusFilter">启用</el-tag>
-            <el-tag size="mini" v-if="scope.row.status == 2" :type="scope.row.status | statusFilter">禁用</el-tag>
+            <el-tag
+              size="mini"
+              v-if="scope.row.status == 1"
+              :type="scope.row.status | statusFilter"
+            >启用</el-tag>
+            <el-tag
+              size="mini"
+              v-if="scope.row.status == 2"
+              :type="scope.row.status | statusFilter"
+            >禁用</el-tag>
           </template>
         </el-table-column>
-         <el-table-column class-name="status-col" label="角色" align="center">
+        <el-table-column class-name="status-col" label="角色" align="center">
           <template slot-scope="scope">
             <el-tag size="mini" v-if="scope.row.role == 1" :type="scope.row.role | statusFilter">客服</el-tag>
             <el-tag size="mini" v-if="scope.row.role == 2" :type="scope.row.role | statusFilter">运维</el-tag>
@@ -92,7 +133,7 @@
         </el-table-column>
         <el-table-column align="center" label="操作">
           <template slot-scope="scope">
-           <el-button v-permission="['admin']" size="mini" @click="onHandleEdit(scope.row)">编辑</el-button>
+            <el-button v-permission="['admin']" size="mini" @click="onHandleEdit(scope.row)">编辑</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -106,11 +147,23 @@
         :page-sizes="[10, 50, 100]"
         :page-size="listQuery.limit"
         layout="total, sizes, prev, pager, next, jumper"
-        :total="total">
-      </el-pagination>
+        :total="total"
+      ></el-pagination>
     </div>
-    <el-dialog :title="modalType ==='create' ? '添加用户' : '修改用户'" :visible.sync="modalVisible" top='10vh' @close="onClean('dataForm')">
-      <el-form ref="dataForm" :model="formParams" :rules="userValidate" label-position="left" label-width="70px" style="width: 50%; margin:0 auto;">
+    <el-dialog
+      :title="modalType ==='create' ? '添加用户' : '修改用户'"
+      :visible.sync="modalVisible"
+      top="10vh"
+      @close="onClean('dataForm')"
+    >
+      <el-form
+        ref="dataForm"
+        :model="formParams"
+        :rules="userValidate"
+        label-position="left"
+        label-width="70px"
+        style="width: 50%; margin:0 auto;"
+      >
         <el-form-item label="用户名" prop="name">
           <el-input size="small" v-model="formParams.name"></el-input>
         </el-form-item>
@@ -119,20 +172,34 @@
         </el-form-item>
         <el-form-item label="状态" prop="status">
           <el-select size="small" v-model="formParams.status" placeholder="请选择状态">
-            <el-option v-for="item in statusOptions" :key="item.key" :label="item.label" :value='item.key'/>
+            <el-option
+              v-for="item in statusOptions"
+              :key="item.key"
+              :label="item.label"
+              :value="item.key"
+            />
           </el-select>
         </el-form-item>
         <el-form-item label="角色" prop="role">
           <el-select size="small" v-model="formParams.role" placeholder="请选择角色">
-            <el-option v-for="item in roleOptions" :key="item.key" :label="item.label" :value='item.key'/>
+            <el-option
+              v-for="item in roleOptions"
+              :key="item.key"
+              :label="item.label"
+              :value="item.key"
+            />
           </el-select>
         </el-form-item>
         <el-form-item>
-          <el-button size="small" type="primary" @click="modalType === 'create' ? onHandleAdd('dataForm') : onHandleUpdate('dataForm')">保存</el-button>
+          <el-button
+            size="small"
+            type="primary"
+            @click="modalType === 'create' ? onHandleAdd('dataForm') : onHandleUpdate('dataForm')"
+          >保存</el-button>
           <el-button size="small" @click="onResetForm('dataForm')">重置</el-button>
         </el-form-item>
-    </el-form>
-  </el-dialog>
+      </el-form>
+    </el-dialog>
   </div>
 </template>
 
@@ -191,7 +258,7 @@ export default {
     const validatePhone = function(rule, value, callback) {
       if (!value) {
         return callback(new Error("请输入手机号"));
-      } else if (!/^[1][3,4,5,7,8][0-9]{9}$/.test(value)) {
+      } else if (!/^[1][3,4,5,6,7,8,9][0-9]{9}$/.test(value)) {
         return callback(new Error("请输入正确的手机号"));
       } else {
         callback();
@@ -199,23 +266,23 @@ export default {
     };
     return {
       list: null,
-      listLoading: true,
+      listLoading: false,
       isSimpleShow: true,
       isShow: false,
       listQuery: {
         current: 1,
         limit: 10,
-        name: '',
-        status: '',
-        role: ''
+        name: "",
+        status: "",
+        role: ""
       },
       total: 0,
-      statusOptions: [{ label: "启用", key: '1' }, { label: "禁用", key: '2' }],
+      statusOptions: [{ label: "启用", key: "1" }, { label: "禁用", key: "2" }],
       roleOptions: [
-        { label: "客服", key: '1' },
-        { label: "运维", key: '2' },
-        { label: "开发", key: '3' },
-        { label: "管理员", key: '4' }
+        { label: "客服", key: "1" },
+        { label: "运维", key: "2" },
+        { label: "开发", key: "3" },
+        { label: "管理员", key: "4" }
       ],
       modalVisible: false,
       modalType: "create",
@@ -229,7 +296,7 @@ export default {
         status: [
           {
             required: true,
-            type: "number",
+            type: "string",
             message: "请选择状态",
             trigger: "change"
           }
@@ -237,7 +304,7 @@ export default {
         role: [
           {
             required: true,
-            type: "number",
+            type: "string",
             message: "请选择角色",
             trigger: "change"
           }
@@ -245,6 +312,7 @@ export default {
         name: [
           {
             required: true,
+            type: "string",
             validator: validateName,
             trigger: "blur"
           }
@@ -252,6 +320,7 @@ export default {
         phone: [
           {
             required: true,
+            type: "string",
             validator: validatePhone,
             trigger: "blur"
           }
@@ -299,7 +368,7 @@ export default {
     },
     onHandleEdit(params) {
       this.modalVisible = true;
-      this.modalType = 'update';
+      this.modalType = "update";
       this.formParams = Object.assign({}, params);
     },
     onResetForm(name) {
@@ -307,18 +376,27 @@ export default {
     },
     onClean(name) {
       this.$refs[name].resetFields();
-      this.modalType = 'create';
+      this.modalType = "create";
     },
     onHandleAdd(name) {
       this.$refs[name].validate(valid => {
         if (valid) {
           this.modalVisible = false;
           addUser(this.formParams).then(response => {
+            this.$message({
+              message: "保存成功",
+              type: "success",
+              center: true
+            });
             this.onResetForm(name);
             this.queryList();
           });
         } else {
-          return false;
+          this.$message.error({
+            message: "请检查输入是否正确",
+            type: "error",
+            center: true
+          });
         }
       });
     },
@@ -326,13 +404,22 @@ export default {
       this.$refs[name].validate(valid => {
         if (valid) {
           this.modalVisible = false;
-          this.modalType = 'create';
+          this.modalType = "create";
           addUser(this.formParams).then(response => {
+            this.$message({
+              message: "修改成功",
+              type: "success",
+              center: true
+            });
             this.onResetForm(name);
             this.queryList();
           });
         } else {
-          return false;
+          this.$message.error({
+            message: "请检查输入是否正确",
+            type: "error",
+            center: true
+          });
         }
       });
     }
