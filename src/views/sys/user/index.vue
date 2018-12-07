@@ -1,6 +1,7 @@
 <template>
   <div class="app-container">
     <div class="app-fifter">
+      <!-- 简单搜索 -->
       <el-form
         :inline="true"
         ref="searchQuery"
@@ -30,6 +31,7 @@
           </el-button>
         </el-form-item>
       </el-form>
+      <!-- 复杂搜索 -->
       <el-form
         :inline="true"
         ref="searchQuery"
@@ -70,11 +72,14 @@
           </el-button>
         </el-form-item>
       </el-form>
+      <!-- 功能按钮 -->
       <div>
         <el-button type="primary" size="small" icon="el-icon-plus" @click="onCreate">新建</el-button>
       </div>
     </div>
+    <!-- 主要内容 -->
     <div class="app-page">
+      <!-- 表格 -->
       <el-table
         v-loading="listLoading"
         :data="list"
@@ -133,11 +138,12 @@
         </el-table-column>
         <el-table-column align="center" label="操作">
           <template slot-scope="scope">
-            <el-button v-permission="['admin']" size="mini" @click="onHandleEdit(scope.row)">编辑</el-button>
+            <a v-permission="['admin']" size="mini" @click="onHandleEdit(scope.row)">编辑</a>
           </template>
         </el-table-column>
       </el-table>
     </div>
+    <!-- 分页插件 -->
     <div class="page-size">
       <el-pagination
         background
@@ -150,11 +156,12 @@
         :total="total"
       ></el-pagination>
     </div>
+    <!-- 修改/添加弹窗 -->
     <el-dialog
       :title="modalType ==='create' ? '添加用户' : '修改用户'"
       :visible.sync="modalVisible"
       top="10vh"
-      @close="onClean('dataForm')"
+      @close="onClose('dataForm')"
     >
       <el-form
         ref="dataForm"
@@ -165,10 +172,10 @@
         style="width: 50%; margin:0 auto;"
       >
         <el-form-item label="用户名" prop="name">
-          <el-input size="small" v-model="formParams.name"></el-input>
+          <el-input size="small" placeholder="请输入用户名" v-model="formParams.name"></el-input>
         </el-form-item>
         <el-form-item label="手机号" prop="phone">
-          <el-input size="small" v-model="formParams.phone"></el-input>
+          <el-input size="small" placeholder="请输入手机号" v-model="formParams.phone"></el-input>
         </el-form-item>
         <el-form-item label="状态" prop="status">
           <el-select size="small" v-model="formParams.status" placeholder="请选择状态">
@@ -227,7 +234,10 @@ import { getUserList, addUser } from "@/api/sys";
 import permission from "@/directive/permission/index.js";
 
 export default {
-  directives: { permission },
+  // 权限
+  directives: {
+    permission
+  },
   filters: {
     statusFilter(status) {
       const statusMap = {
@@ -265,10 +275,10 @@ export default {
       }
     };
     return {
-      list: null,
-      listLoading: false,
-      isSimpleShow: true,
-      isShow: false,
+      list: null, //列表数据
+      listLoading: false, // 表格loading状态
+      isSimpleShow: true, // 简单搜索
+      isShow: false, // 复制搜索
       listQuery: {
         current: 1,
         limit: 10,
@@ -276,7 +286,7 @@ export default {
         status: "",
         role: ""
       },
-      total: 0,
+      total: 0, // 总条数
       statusOptions: [{ label: "启用", key: "1" }, { label: "禁用", key: "2" }],
       roleOptions: [
         { label: "客服", key: "1" },
@@ -284,8 +294,8 @@ export default {
         { label: "开发", key: "3" },
         { label: "管理员", key: "4" }
       ],
-      modalVisible: false,
-      modalType: "create",
+      modalVisible: false, // 是否显示弹窗
+      modalType: "create", // modal类型 添加/修改
       formParams: {
         status: null,
         name: null,
@@ -332,6 +342,7 @@ export default {
     this.queryList();
   },
   methods: {
+    // 获取列表数据
     queryList() {
       this.listLoading = true;
       getUserList(this.listQuery).then(response => {
@@ -340,44 +351,56 @@ export default {
         this.listLoading = false;
       });
     },
+    // 修改分页大小
     handleSizeChange(val) {
       this.listQuery.limit = val;
       this.onSearch();
     },
+
+    // 修改当前页码
     handleCurrentChange(val) {
       this.listQuery.current = val;
       this.onSearch();
     },
+    // 搜索
     onSearch() {
       this.queryList();
     },
+    // 重置搜索框
     onReset(name) {
       this.listQuery = {};
     },
+    // 显示复杂搜索
     onShow() {
       this.isSimpleShow = false;
       this.isShow = true;
     },
+    // 显示简单搜索
     onSimpleShow() {
       this.isSimpleShow = true;
       this.isShow = false;
       this.listQuery.role = null;
     },
+    // 添加用户
     onCreate() {
       this.modalVisible = true;
     },
+    // 修改用户
     onHandleEdit(params) {
       this.modalVisible = true;
       this.modalType = "update";
       this.formParams = Object.assign({}, params);
     },
+    // 重置Form表单
     onResetForm(name) {
       this.$refs[name].resetFields();
     },
-    onClean(name) {
+    // 关闭Form表单
+    onClose(name) {
       this.$refs[name].resetFields();
       this.modalType = "create";
     },
+    // 添加用户
     onHandleAdd(name) {
       this.$refs[name].validate(valid => {
         if (valid) {
@@ -400,6 +423,7 @@ export default {
         }
       });
     },
+    // 修改用户
     onHandleUpdate(name) {
       this.$refs[name].validate(valid => {
         if (valid) {

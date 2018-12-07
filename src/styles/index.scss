@@ -9,7 +9,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
-  font-family: "Helvetica Neue",Helvetica,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","微软雅黑",Arial,sans-serif;
+  font-family: "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
   font-size: 14px;
   line-height: 1.5rem;
   background: #f0f2f5;
@@ -24,7 +24,7 @@ html {
   box-sizing: border-box;
 }
 
-#app{
+#app {
   height: 100%;
 }
 
@@ -38,14 +38,14 @@ a,
 a:focus,
 a:hover {
   cursor: pointer;
-  color: inherit;
+  color: #409EFF;
   outline: none;
   text-decoration: none;
 }
 
-div:focus{
+div:focus {
   outline: none;
- }
+}
 
 a:focus,
 a:active {
@@ -56,7 +56,7 @@ a,
 a:focus,
 a:hover {
   cursor: pointer;
-  color: inherit;
+  color: #409EFF;
   text-decoration: none;
 }
 
@@ -72,7 +72,7 @@ a:hover {
 }
 
 //main-container全局样式
-.app-main{
+.app-main {
   margin-top: 1.3rem;
   margin-left: 1.3rem;
   margin-right: 1.3rem;
@@ -87,16 +87,18 @@ a:hover {
   padding-bottom: 4rem;
   background: #fff;
 }
+
 .app-page {
   border-left: 1px solid #f0f2f5;
   border-top: 1px solid #f0f2f5;
   border-right: 1px solid #f0f2f5;
 }
+
 .page-size {
   padding-top: 1rem;
   float: right;
 }
+
 .app-fifter {
   margin-bottom: 1.2rem;
 }
-
